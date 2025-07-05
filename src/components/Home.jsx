@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Child from "./Child";
 import TripsList from "./TripsList";
 import { useFieldArray, useForm } from "react-hook-form";
@@ -20,6 +20,47 @@ function Home(props) {
   const msgToChild = () => {
     displayAlert("from parent");
   };
+
+  useEffect(() => {
+    // local storage/ session
+    // side effects : dom, window object, api call , timers
+
+    // memory leak
+
+    // const timer1 = setInterval(() => {
+    //   console.log("hello from time interval"); // x2
+    //   displayAlert("ilgrhkjs");
+    // }, 3000);
+
+    //asynchronus
+    // api call => get data from endpoint
+    // axios =/= fetch
+    fetch("https://jsonplaceholder.typicode.com/posts")
+      .then((response) => response.json())
+      .then((res) => {
+        console.log(res);
+      });
+
+    // dom
+    const formElement = document.querySelector("#form");
+
+    console.log(formElement ? formElement : null);
+
+    // window object => web storage
+    window.localStorage.setItem("test", "hello");
+    window.sessionStorage.setItem("test session storage", "hello");
+    console.log("component is mounted $$$$$$$");
+    // //clear side effects when component is unmounted
+    // return () => {
+    //   clearInterval(timer1);
+    // };
+  }, []);
+
+  useEffect(() => {
+    setCounter((prev) => prev + 1);
+    console.log("component is mounted");
+  }, []);
+  // mount => unmount => re-mount  : in development mode
 
   const {
     register,
@@ -45,6 +86,7 @@ function Home(props) {
   return (
     <div>
       <form
+        id="form"
         onSubmit={handleSubmit(onSubmit)}
         className="max-w-xl mx-auto bg-white p-6 rounded-xl shadow-md space-y-6 mt-10"
       >
@@ -155,3 +197,36 @@ function Home(props) {
 }
 
 export default Home;
+
+//useEffect
+// mount => render in dom
+// update => state is changed
+// unmount  => removed from dom
+
+// [] dependency list : array
+
+// life cycle of the component => mount, update, unmount
+// class components =>
+
+// componentDidMount(){}
+// componentDidUpdate(){}
+// componentWillUnmount(){}
+
+// useEffect(()=>{
+// setCounter()
+//},[]) ==> only in mount
+
+// useEffect(()=>{
+// setCounter()
+//}) ==> executed with every state update == infinite loop
+
+// useEffect(()=>{
+// setCounter()
+//}, [userId]) ==> executed with every state update == infinite loop
+
+// useEffect(()=>{
+// setCounter()
+// return ()=>{
+//  clearInterval()
+// }
+//}, [userId]) ==> executed with every state update == infinite loop
