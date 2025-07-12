@@ -15,12 +15,11 @@ function Child({ displayAlert, counter }) {
 
   return (
     <div className="p-4 bg-amber-200 flex flex-col justify-start items-start gap-3">
-      <button
+      <input
         className="border bg-red-300 text-white p-4 rounded-md cursor-pointer"
-        onClick={() => setUserName("sara")}
-      >
-        Change user name
-      </button>
+        onChange={(e) => setUserName(e.target.value)}
+      />
+
       <button
         onClick={displayAlert}
         className="border bg-sky-300 text-white p-4 rounded-md cursor-pointer"

@@ -4,6 +4,8 @@ import TripsList from "./TripsList";
 import { useFieldArray, useForm } from "react-hook-form";
 import Parent from "./Parent";
 import { NameContext } from "./context/UserNamecontext";
+import Cart from "./Cart";
+import Test from "./Test";
 function Home(props) {
   const [counter, setCounter] = useState(0);
 
@@ -55,8 +57,11 @@ function Home(props) {
 
   const { userName } = useContext(NameContext);
 
+  // useReducer() more complicated data : products[] == useState() boolen, string, number ...
+
   return (
     <div>
+      <Cart />
       <div>User name inside home component : {userName}</div>
       <Parent displayAlert={msgToChild} counter={counter} />
       <form
