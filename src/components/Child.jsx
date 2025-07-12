@@ -1,4 +1,5 @@
-import React from "react";
+import React, { useContext } from "react";
+import { NameContext } from "./context/UserNamecontext";
 
 //props = {}
 
@@ -9,10 +10,17 @@ import React from "react";
 
 //destructuring => const {prop,prop2,prop3} = obj;
 
-function Child({ userName, displayAlert, counter }) {
+function Child({ displayAlert, counter }) {
+  const { setUserName } = useContext(NameContext);
+
   return (
-    <div>
-      <p>Child username {userName}</p>
+    <div className="p-4 bg-amber-200 flex flex-col justify-start items-start gap-3">
+      <button
+        className="border bg-red-300 text-white p-4 rounded-md cursor-pointer"
+        onClick={() => setUserName("sara")}
+      >
+        Change user name
+      </button>
       <button
         onClick={displayAlert}
         className="border bg-sky-300 text-white p-4 rounded-md cursor-pointer"

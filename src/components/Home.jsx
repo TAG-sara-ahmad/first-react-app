@@ -1,13 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { use, useContext, useEffect, useState } from "react";
 import Child from "./Child";
 import TripsList from "./TripsList";
 import { useFieldArray, useForm } from "react-hook-form";
-
+import Parent from "./Parent";
+import { NameContext } from "./context/UserNamecontext";
 function Home(props) {
-  //props ==> properties
-
-  //state? object to store data that would change , affect the ui
-
   const [counter, setCounter] = useState(0);
 
   let user_name = "sara";
@@ -22,44 +19,17 @@ function Home(props) {
   };
 
   useEffect(() => {
-    // local storage/ session
-    // side effects : dom, window object, api call , timers
-
-    // memory leak
-
-    // const timer1 = setInterval(() => {
-    //   console.log("hello from time interval"); // x2
-    //   displayAlert("ilgrhkjs");
-    // }, 3000);
-
-    //asynchronus
-    // api call => get data from endpoint
-    // axios =/= fetch
     fetch("https://jsonplaceholder.typicode.com/posts")
       .then((response) => response.json())
       .then((res) => {
         console.log(res);
       });
-
-    // dom
-    const formElement = document.querySelector("#form");
-
-    console.log(formElement ? formElement : null);
-
-    // window object => web storage
-    window.localStorage.setItem("test", "hello");
-    window.sessionStorage.setItem("test session storage", "hello");
-    console.log("component is mounted $$$$$$$");
-    // //clear side effects when component is unmounted
-    // return () => {
-    //   clearInterval(timer1);
-    // };
   }, []);
 
-  useEffect(() => {
-    setCounter((prev) => prev + 1);
-    console.log("component is mounted");
-  }, []);
+  // useEffect(() => {
+  //   setCounter((prev) => prev + 1);
+  //   console.log("component is mounted");
+  // }, []);
   // mount => unmount => re-mount  : in development mode
 
   const {
@@ -83,8 +53,12 @@ function Home(props) {
 
   const names = ["name 1", "name 2", "name 3"];
 
+  const { userName } = useContext(NameContext);
+
   return (
     <div>
+      <div>User name inside home component : {userName}</div>
+      <Parent displayAlert={msgToChild} counter={counter} />
       <form
         id="form"
         onSubmit={handleSubmit(onSubmit)}
@@ -175,11 +149,6 @@ function Home(props) {
       Home
       <div className="p-5 rounded-2xl bg-gray-300">
         <TripsList />
-        <Child
-          userName={user_name}
-          displayAlert={msgToChild}
-          counter={counter}
-        />
 
         <span>{counter}</span>
 
